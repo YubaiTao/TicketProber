@@ -1,5 +1,5 @@
 # TicketProber
 
-Ticket Feed web app.
+Ticket Feed Web app with Java servlet.
 
-Using TicketMaster API
+Using [TicketMaster API](https://developer.ticketmaster.com/) as data source.
