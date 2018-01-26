@@ -30,7 +30,7 @@ public class SearchItem extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         double lat = Double.parseDouble(request.getParameter("lat"));
-        double lon = Double.parseDouble(request.getParameter("long"));
+        double lon = Double.parseDouble(request.getParameter("lon"));
         // Term can be empty or null
         String term = request.getParameter("term");
         TicketMasterAPI tmAPI = new TicketMasterAPI();
