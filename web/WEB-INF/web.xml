@@ -19,4 +19,12 @@
         <servlet-name>rpc.RecommendItem</servlet-name>
         <url-pattern>/recommendation</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>rpc.ItemHistory</servlet-name>
+        <servlet-class>rpc.ItemHistory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rpc.ItemHistory</servlet-name>
+        <url-pattern>/history</url-pattern>
+    </servlet-mapping>
 </web-app>

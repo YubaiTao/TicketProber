@@ -4,13 +4,10 @@ import db.DBConnection;
 import entity.Item;
 import external.TicketMasterAPI;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import java.sql.Connection;
 
 /**
  * project: TicketProber
@@ -37,27 +34,122 @@ public class MySQLConnection implements DBConnection{
 
     @Override
     public void setFavoriteItems(String userId, List<String> itemIds) {
+        if (conn == null) {
+            return;
+        }
+        String query = "INSERT IGNORE INTO history (user_id, item_id) VALUES (?, ?)";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            for (String itemId : itemIds) {
+                statement.setString(1, userId);
+                statement.setString(2, itemId);
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void unsetFavoriteItems(String userId, List<String> itemIds) {
+        if (conn == null) {
+            return;
+        }
+        String query = "DELETE FROM history WHERE user_id = ? and item_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            for (String itemId : itemIds) {
+                statement.setString(1, userId);
+                statement.setString(2, itemId);
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public Set<String> getFavoriteItemIds(String userId) {
-        return null;
+        if (conn == null) {
+            return new HashSet<>();
+        }
+        Set<String> favoriteItems = new HashSet<>();
+        try {
+            String sql = "SELECT item_id from history WHERE user_id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, userId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                String itemId = rs.getString("item_id");
+                favoriteItems.add(itemId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return favoriteItems;
     }
 
     @Override
     public Set<Item> getFavoriteItems(String userId) {
-        return null;
+        if (conn == null) {
+            return new HashSet<>();
+        }
+        Set<String> itemIds = getFavoriteItemIds(userId);
+        Set<Item> favoriteItems = new HashSet<>();
+        try {
+            for (String itemId : itemIds) {
+                String sql = "SELECT * from items WHERE item_id = ? ";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setString(1, itemId);
+                ResultSet rs = statement.executeQuery();
+                Item.ItemBuilder builder = new Item.ItemBuilder();
+
+                // Because itemId is unique and given one item id there should
+                // have
+                // only one result returned.
+                if (rs.next()) {
+                    builder.setItemId(rs.getString("item_id"));
+                    builder.setName(rs.getString("name"));
+                    builder.setRating(rs.getDouble("rating"));
+                    builder.setAddress(rs.getString("address"));
+                    builder.setImageUrl(rs.getString("image_url"));
+                    builder.setUrl(rs.getString("url"));
+                    builder.setCategories(getCategories(itemId));
+                }
+                favoriteItems.add(builder.build());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return favoriteItems;
     }
 
     @Override
     public Set<String> getCategories(String itemId) {
-        return null;
+        if (conn == null) {
+            return new HashSet<>();
+        }
+        Set<String> categories = new HashSet<>();
+        try {
+            String sql = "SELECT category FROM categories WHERE item_id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, itemId);
+            // a return value to receive the result
+            ResultSet rs = statement.executeQuery();
+            // rs is a pointer that point to -1 position of the table in DB (header)
+            // an iterator
+            while (rs.next()) {
+                categories.add(rs.getString("category"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categories;
     }
 
     @Override
