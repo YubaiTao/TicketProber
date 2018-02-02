@@ -1,5 +1,7 @@
 package db;
 
+import db.db.mysql.MySQLConnection;
+
 /**
  * project: TicketProber
  *
@@ -13,7 +15,7 @@ public class DBConnectionFactory {
     public static DBConnection getDBConnection(String db) {
         switch (db) {
             case "mysql":
-                return null;
+                return new MySQLConnection();
             case "mongodb":
                 return null;
             // You may try other dbs and add them here.
