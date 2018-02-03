@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * project: Webtest
@@ -35,19 +36,22 @@ public class SearchItem extends HttpServlet {
         double lon = Double.parseDouble(request.getParameter("lon"));
         // Term can be empty or null
         String term = request.getParameter("term");
+        String userId = request.getParameter("user_id");
 
         // TicketMasterAPI tmAPI = new TicketMasterAPI();
         // List<Item> items = tmAPI.search(lat, lon, term);
 
         DBConnection connection = DBConnectionFactory.getDBConnection();
         List<Item> items = connection.searchItems(lat, lon, term);
-
-
         List<JSONObject> list = new ArrayList<>();
+
+        Set<String> favorite = connection.getFavoriteItemIds(userId);
         try {
             for (Item item : items) {
                 // Add a thin version of item objects
                 JSONObject obj = item.toJSONObject();
+                // Check if this is a favorite one
+                obj.put("favorite", favorite.contains(item.getItemId()));
                 list.add(obj);
             }
         } catch (Exception e) {
