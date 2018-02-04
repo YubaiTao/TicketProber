@@ -12,6 +12,20 @@ import java.util.Set;
  * @author YubaiTao on 23/01/2018.
  */
 public class Item {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        return itemId.equals(item.itemId);
+    }
+
+    @Override
+    public int hashCode() {
+        return itemId.hashCode();
+    }
 
     private Item(ItemBuilder builder) {
         this.itemId = builder.itemId;

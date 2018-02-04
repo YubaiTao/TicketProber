@@ -27,4 +27,22 @@
         <servlet-name>rpc.ItemHistory</servlet-name>
         <url-pattern>/history</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>rpc.Login</servlet-name>
+        <servlet-class>rpc.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rpc.Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>rpc.Logout</servlet-name>
+        <servlet-class>rpc.Logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rpc.Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 </web-app>
