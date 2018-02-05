@@ -1,6 +1,5 @@
 package rpc;
 
-import com.mysql.jdbc.Util;
 import db.DBConnection;
 import db.DBConnectionFactory;
 import entity.Item;
