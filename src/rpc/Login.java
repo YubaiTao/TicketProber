@@ -1,11 +1,7 @@
 package rpc;
 
-import algorithm.GeoRecommendation;
-import com.mysql.jdbc.Util;
 import db.DBConnection;
 import db.DBConnectionFactory;
-import entity.Item;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
+
 
 /**
  * project: TicketProber

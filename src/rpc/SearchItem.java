@@ -46,10 +46,7 @@ public class SearchItem extends HttpServlet {
         double lon = Double.parseDouble(request.getParameter("lon"));
         // Term can be empty or null
         String term = request.getParameter("term");
-//        String userId = request.getParameter("user_id");
-
-        // TicketMasterAPI tmAPI = new TicketMasterAPI();
-        // List<Item> items = tmAPI.search(lat, lon, term);
+//         String userId = request.getParameter("user_id");
 
         DBConnection connection = DBConnectionFactory.getDBConnection();
         List<Item> items = connection.searchItems(lat, lon, term);
