@@ -28,7 +28,7 @@ public class FindPeak {
 
         // Construct mapper function
         // function() {
-        // if (this.url.startswith("/Titan")) {
+        // if (this.url.startswith("/TicketProber")) {
         // emit(this.time.substring(0, 5), 1);
         // }
         // }

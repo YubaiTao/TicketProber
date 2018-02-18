@@ -18,11 +18,12 @@ import java.util.regex.Pattern;
  * @author YubaiTao on 13/02/2018.
  */
 public class Purify {
+    // import the local log sample data
     public static void main(String[] args) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase db = mongoClient.getDatabase(MongoDBUtility.DB_NAME);
         // Switch to your own path
-        String fileName = "C:\\Users\\sean_\\Downloads\\tomcat_log.txt";
+        String fileName = "/Users/YubaiTao/Desktop/tomcat_log.txt";
 
         try {
             db.getCollection("logs").drop();
